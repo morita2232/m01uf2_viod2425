@@ -1,5 +1,17 @@
 #!/bin/bash
 
+if [ "$1" == "" ]
+then
+	echo "Debes indicar la direccion del servidor."
+	echo "Ejemplo:"
+	echo -e "\t$0 127.0.0.1"
+	exit 1
+fi
+
+IP_SERVER=$1
+
+
+IP=`ip a | grep "scope global" | xargs | cut -d " " -f 2 | cut -d "/" -f 1`
 
 PORT="2022"
 
@@ -8,7 +20,7 @@ echo "Cliente de Dragon Magia Abuelita Miedo 2022"
 echo "1. ENVIO DE CABECERA"
 
 
-echo "DMAM" | nc 127.0.0.1 $PORT
+echo "DMAM $IP" | nc $IP_SERVER $PORT
 
 DATA=`nc -l $PORT`
 
@@ -23,7 +35,7 @@ fi
 FILE_NAME="dragon.txt"
 
 echo "4. CHECK OK - ENVIANDO FILE_NAME dragon.txt"
-echo "FILE_NAME $FILE_NAME" | nc localhost $PORT
+echo "FILE_NAME $FILE_NAME" | nc $IP_SERVER $PORT
 
 DATA=`nc -l $PORT`
 
@@ -37,5 +49,5 @@ fi
 
 echo "8. CHECK OK - ENVIANDO CONTENIDO ARCHIVO"
 
-cat client/$FILE_NAME | nc localhost $PORT
+cat client/$FILE_NAME | nc $IP_SERVER $PORT
 
