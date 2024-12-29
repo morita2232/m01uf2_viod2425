@@ -1,5 +1,9 @@
  _______________
+<<<<<<< HEAD
 < soy un dragon >
+=======
+< Soy un dragon >
+>>>>>>> 118bbbc (Commit changes)
  ---------------
         \   ^__^
          \  (oo)\_______
