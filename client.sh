@@ -34,8 +34,11 @@ fi
 
 FILE_NAME="dragon.txt"
 
+MD5SUM=$(echo -n "$FILE_NAME" | md5sum | cut -d ' ' -f 1)
+
 echo "4. CHECK OK - ENVIANDO FILE_NAME dragon.txt"
-echo "FILE_NAME $FILE_NAME" | nc $IP_SERVER $PORT
+
+echo "FILE_NAME $FILE_NAME $MD5SUM" | nc $IP_SERVER $PORT
 
 DATA=`nc -l $PORT`
 
@@ -51,3 +54,27 @@ echo "8. CHECK OK - ENVIANDO CONTENIDO ARCHIVO"
 
 cat client/$FILE_NAME | nc $IP_SERVER $PORT
 
+DATA=`nc -l $PORT`
+
+echo "11. COMPROBANDO RESPUESTA"
+
+if [ $DATA != "OK_ARCHIVO_SAVED" ]
+then
+	echo "ERROR 3: Los datos se enviaron incorrectamente"
+	exit 3
+fi
+
+FILE_MD5_DATOS=$(md5sum client/$FILE_NAME | cut -d ' ' -f 1)
+
+echo "$FILE_MD5_DATOS" | nc $IP_SERVER $PORT
+
+DATA=`nc -l $PORT`
+
+echo "12. COMPORABNDO RESPUESTA"
+if [ "$DATA" != "OK_FILE_MD5" ]
+then
+	echo "ERROR 4: El MD5 no coincide o hubo un error"
+	exit 4
+fi
+
+echo "EJECUTADO CORRECTAMENTE - GRACIAS!"
