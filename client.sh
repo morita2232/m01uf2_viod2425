@@ -70,7 +70,7 @@ echo "$FILE_MD5_DATOS" | nc $IP_SERVER $PORT
 
 DATA=`nc -l $PORT`
 
-echo "12. COMPORABNDO RESPUESTA"
+echo "14. COMPORABNDO RESPUESTA"
 if [ "$DATA" != "OK_FILE_MD5" ]
 then
 	echo "ERROR 4: El MD5 no coincide o hubo un error"

@@ -70,6 +70,8 @@ FILE_MD5_RECIBIDO=`echo $DATA | cut -d ' ' -f 2`
 
 FILE_MD5_CALCULADO=$(md5sum server/$NOMBRE_ARCHIVO | cut -d ' ' -f 1)
 
+echo "12. RECIBIENDO MD5 DEL CONTENIDO"
+
 if [ "$FILE_MD5_RECIBIDO" != "$FILE_MD5_CALCULADO" ]
 then
 	echo "ERROR 4: El MD5 se guardo de manera incorrecta"
